@@ -1,0 +1,165 @@
+<template>
+  <view class="page-index">
+    <BookList :list="{{data.list}}" title="用户列表"
+              :loading.sync="loading" :noMore.sync="noMoreList"></BookList>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import BookList from '../components/user/userList'
+  import Toast from 'wepy-com-toast'
+  import base from '../mixins/base'
+  import http from '../mixins/http'
+  import {funImages} from '../mixins/demo'
+  export default class Index extends wepy.page {
+    mixins = [base, http]
+    config = {
+      navigationBarTitleText: '首页',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#049BFF'
+    }
+    data = {
+      searchText: 'book',
+      swipers: [
+        // 占位图，防止请求错误无图显示
+        {image: '/images/swiper.png', url: '/pages/main/search'}
+      ],
+      categorys: [
+        {title: '今', image: funImages[0]},
+        {title: '晚', image: funImages[1]},
+        {title: '吃', image: funImages[2]},
+        {title: '鸡', image: funImages[3]}
+      ],
+      list: [{
+        id: '1',
+        title: '11',
+        status: '1',
+        image: '/images/swiper.png',
+        content: '1111',
+        tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+      },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        }],
+      noMoreList: true,
+      loading: true,
+      page: 0,
+      size: 5
+    }
+    components = {
+      BookList: BookList,
+      toast: Toast
+    }
+
+    onReady() {
+      this.initPageData()
+    }
+
+    // 初始化页面数据
+    initPageData() {
+      // 初始化参数
+      this.page = 0
+      this.data.list = [{
+        id: '1',
+        title: '11',
+        status: '1',
+        image: '/images/swiper.png',
+        content: '1111',
+        tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+      },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        },
+        {
+          id: '1',
+          title: '11',
+          status: '1',
+          image: '/images/swiper.png',
+          content: '1111',
+          tags: [{tag: '11'}, {tag: '11'}, {tag: '11'}]
+        }]
+      // 处理轮播图
+     // this.swipers.push({image: '/images/swiper.png'})
+    }
+
+    methods = {
+      onLoad  () {
+        let self = this
+        self.$apply()
+      }
+    }
+  }
+</script>
+
+<style lang="less">
+  .page-index {
+
+  }
+</style>

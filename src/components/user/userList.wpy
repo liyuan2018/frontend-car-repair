@@ -1,0 +1,132 @@
+<template>
+  <view class="userlist">
+    <view wx:if="{{title}}" class="userlist-name">{{title}}</view>
+    <block wx:if="{{list.length > 0}}">
+      <block wx:for="{{list}}" wx:key="index">
+        <navigator url="/pages/main/detail?id={{item.id}}&title={{item.title}}&status={{item.status}}" class="userlist-item clearfix">
+          <view class="userlist-cover-wrapper">
+            <image src="{{item.image}}" mode="widthFix" style="width:100%;" />
+          </view>
+          <view class="userlist-content-wrapper">
+            <view class="userlist-title">{{item.title}}</view>
+            <view class="userlist-abstract">{{item.content}}</view>
+            <view wx:if="{{isCollectList}}" class="userlist-tags">
+
+              <block wx:if="{{item.status == '1'}}">
+                <image src="{{icon_eye_active}}" class="imgicon" mode="aspectFit"/>
+                <text class="userlist-text color-blue">可借阅</text>
+              </block>
+              <block wx:else>
+                <image src="{{icon_eye}}" class="imgicon" mode="aspectFit"/>
+                <text class="userlist-text color-bbb">已借完</text>
+              </block>
+
+              <view @tap.stop="toStar({{item}}, {{index}})" class="userlist-status">
+                <block wx:if="{{item.collected == 1}}">
+                  <image class="imgicon" src="{{icon_star_active}}" mode="aspectFit"/>
+                  <text class="userlist-text reset-text-star color-999">已收藏</text>
+                </block><block wx:else>
+                <image class="imgicon" src="{{icon_star}}" mode="aspectFit"/>
+                <text class="userlist-text reset-text-star color-blue">收藏</text>
+              </block>
+              </view>
+
+            </view>
+            <view wx:else class="userlist-tags">
+              <block wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">
+                <view class="userlist-tag">{{tag}}</view>
+              </block>
+              <view class="userlist-status">
+                <block wx:if="{{item.status == '1'}}">
+                  <image src="{{icon_eye_active}}" class="imgicon" mode="aspectFit"/>
+                  <text class="userlist-text color-blue">可借阅</text>
+                </block>
+                <block wx:else>
+                  <image src="{{icon_eye}}" class="imgicon" mode="aspectFit"/>
+                  <text class="userlist-text color-bbb">已借完</text>
+                </block>
+              </view>
+            </view>
+          </view>
+        </navigator>
+      </block>
+      <block wx:if="{{loading}}">
+        <view class="weui-loadmore">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+      </block>
+      <block wx:elif="{{noMore}}">
+        <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无书籍</view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { service } from '../../config.js'
+  import http from '../../mixins/http'
+  import base from '../../mixins/base'
+
+  export default class UserList extends wepy.component {
+    mixins = [base, http]
+    props = {
+      list: {
+        type: Object,
+        default: []
+      },
+      title: {
+        type: String,
+        default: null
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      noMore: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * [type 列表类型：常规列表/收藏列表]
+       * @type {list/collect}
+       */
+      type: {
+        type: String,
+        default: 'list'
+      }
+    }
+
+    data = {
+      icon_eye: '/images/icon/icon-eye@2x.png',
+      icon_eye_active: '/images/icon/icon-eye-active@2x.png',
+      icon_star: '/images/icon/icon-star@2x.png',
+      icon_star_active: '/images/icon/icon-star-active@2x.png'
+    }
+
+    computed = {
+      isCollectList() {
+        return this.type === 'collect'
+      }
+    }
+
+    methods = {
+      onLoad  () {
+        let self = this
+        selt.data.title='22222'
+        self.$apply()
+      }
+    }
+  }
+</script>
+
+<style type="less">
+</style>
